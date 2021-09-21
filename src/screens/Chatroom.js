@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import wechat from '../apis/wechat'
 import { Layout, Menu, Breadcrumb } from 'antd';
-import {UserSidebar, MessageHeader} from './../components'
+import {UserSidebar, MessageHeader, CommentBox} from './../components'
 const { Header, Content, Footer, Sider } = Layout;
 
 const Chatroom = () => {
 
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState('');
+  const [submitting, setSubmitting] = useState(false)
 
   const handleUserChange = (_user) => {
     setUser(_user);
@@ -26,6 +27,11 @@ const Chatroom = () => {
     })
   }, [])
 
+  const onSubmit = (msg) => {
+    setSubmitting(true);
+    
+  }
+
   return (
     <Layout>
       <Sider className="site-layout-background" style={{padding: "20px"}} width={200}>
@@ -33,6 +39,7 @@ const Chatroom = () => {
       </Sider>
       <Content style={{ minHeight: 280 }}>
         <MessageHeader user={user}/>
+        <CommentBox submitting={submitting} onSubmit={onSubmit}/>
       </Content>
     </Layout>
   )
