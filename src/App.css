@@ -1,1 +1,5 @@
 @import '~antd/dist/antd.css';
+
+.site-layout {
+  background: #fff;
+}
