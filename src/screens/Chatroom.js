@@ -1,16 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import wechat from '../apis/wechat'
 import { Layout, Menu, Breadcrumb } from 'antd';
+import {UserSidebar} from './../components'
 const { Header, Content, Footer, Sider } = Layout;
 
 const Chatroom = () => {
 
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState('');
+
+  const handleUserChange = (_user) => {
+    setUser(_user);
+  }
 
   useEffect(() => {
     wechat.get('/v1/wechat-users')
     .then((res) => {
       setUsers(res.data.users)
+      if(res.data.users.length > 0) {
+        setUser(res.data.users[0]);
+      }
     })
     .catch((err) => {
       console.log(err)
@@ -19,8 +28,8 @@ const Chatroom = () => {
 
   return (
     <Layout>
-      <Sider className="site-layout-background" width={200}>
-
+      <Sider className="site-layout-background" style={{padding: "20px"}} width={200}>
+        <UserSidebar items={users} changeUser={handleUserChange}/>
       </Sider>
       <Content style={{ padding: '0 24px', minHeight: 280 }}>Content</Content>
     </Layout>
