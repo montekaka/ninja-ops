@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Layout className="layout">
         <Navbar/>
-        <Content  className="site-layout" style={{ padding: '50px 50px'}}>          
+        <Content  className="site-layout" style={{ padding: '50px 0px'}}>          
           <Switch>
             <Route exact path="/"><Home/></Route>
             <Route exact path="/chatroom"><Chatroom/></Route>
