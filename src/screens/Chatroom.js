@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import wechat from '../apis/wechat'
 import { Layout, Menu, Breadcrumb } from 'antd';
-import {UserSidebar} from './../components'
+import {UserSidebar, MessageHeader} from './../components'
 const { Header, Content, Footer, Sider } = Layout;
 
 const Chatroom = () => {
@@ -31,7 +31,9 @@ const Chatroom = () => {
       <Sider className="site-layout-background" style={{padding: "20px"}} width={200}>
         <UserSidebar items={users} changeUser={handleUserChange}/>
       </Sider>
-      <Content style={{ padding: '0 24px', minHeight: 280 }}>Content</Content>
+      <Content style={{ minHeight: 280 }}>
+        <MessageHeader user={user}/>
+      </Content>
     </Layout>
   )
 }
