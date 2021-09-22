@@ -4,6 +4,7 @@ import io from "socket.io-client"
 const useSocketMessages = (wechatId) => {
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [newMessage, setNewMessage] = useState(null);
 
   useEffect(() => {
     if(!socket) {
@@ -15,12 +16,21 @@ const useSocketMessages = (wechatId) => {
   useEffect(() => {
     if(wechatId) {
       socket.on(`wechat_${wechatId}`, (msg) => {
-        const {Content, CreateTime, FromUserName} = msg;
-        const _messages = [...messages, {content: Content, createTime: CreateTime, fromUserName: FromUserName, messageType: 'receive'}];
-        setMessages(_messages);
+        const {Content, CreateTime, FromUserName} = msg;        
+        setNewMessage({content: Content, createTime: CreateTime, fromUserName: FromUserName, messageType: 'receive'})
+        // console.log(newMessage)
+        // const _messages = [...messages, {content: Content, createTime: CreateTime, fromUserName: FromUserName, messageType: 'receive'}];
+        // setMessages(_messages);
       })
     }
   }, [wechatId])
+  
+  useEffect(() => {
+    // console.log(newMessage)
+    if(newMessage) {
+      setMessages([newMessage, ...messages])
+    }
+  }, [newMessage])
 
   return [messages, setMessages]
 }

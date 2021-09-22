@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import wechat from '../apis/wechat'
 import {useSocketMessages} from '../hooks'
 import { Layout, Menu, Breadcrumb } from 'antd';
-import {UserSidebar, MessageHeader, CommentBox} from './../components'
+import {UserSidebar, MessageHeader, CommentBox, Messages} from './../components'
 const { Header, Content, Footer, Sider } = Layout;
 
 const Chatroom = () => {
@@ -37,9 +37,9 @@ const Chatroom = () => {
       "content": message
     })
     .then((res) => {
-      setMessages([...messages, {
+      setMessages([{
         content: message, createTime: Date.now(), fromUserName: 'KF', messageType: 'send'
-      }])
+      }, ...messages])
       setMessage('')
       setSubmitting(false);
     })
@@ -60,7 +60,7 @@ const Chatroom = () => {
       </Sider>
       <Content style={{ minHeight: 280 }}>
         <MessageHeader user={user}/>
-        <p>{messages.length}</p>
+        <Messages messages={messages}/>
         <CommentBox 
           onMessageChange={onMessageChange}
           message={message} 
