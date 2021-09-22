@@ -5,8 +5,6 @@ const { TextArea } = Input;
 
 const CommentBox = ({submitting, onSubmit, message, onMessageChange}) => {
 
-
-
   return (
     <div style={{padding: "20px"}}>
       <Form.Item>
