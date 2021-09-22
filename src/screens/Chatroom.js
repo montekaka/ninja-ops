@@ -7,8 +7,9 @@ const { Header, Content, Footer, Sider } = Layout;
 const Chatroom = () => {
 
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState({});
   const [submitting, setSubmitting] = useState(false)
+  const [message, setMessage] = useState('');
 
   const handleUserChange = (_user) => {
     setUser(_user);
@@ -27,9 +28,24 @@ const Chatroom = () => {
     })
   }, [])
 
-  const onSubmit = (msg) => {
+  const onSubmit = () => {
     setSubmitting(true);
-    
+    wechat.post('/v1/send_text', {
+      "toUserId": user.openid,
+      "content": message
+    })
+    .then((res) => {
+      setMessage('')
+      setSubmitting(false);
+    })
+    .catch((err) => {
+      console.log(err)
+      setSubmitting(false);
+    })
+  }
+
+  const onMessageChange = (value) => {
+    setMessage(value)
   }
 
   return (
@@ -39,7 +55,11 @@ const Chatroom = () => {
       </Sider>
       <Content style={{ minHeight: 280 }}>
         <MessageHeader user={user}/>
-        <CommentBox submitting={submitting} onSubmit={onSubmit}/>
+        <CommentBox 
+          onMessageChange={onMessageChange}
+          message={message} 
+          submitting={submitting} 
+          onSubmit={onSubmit}/>
       </Content>
     </Layout>
   )
