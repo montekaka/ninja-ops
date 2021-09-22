@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import wechat from '../apis/wechat'
+import {useSocketMessages} from '../hooks'
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {UserSidebar, MessageHeader, CommentBox} from './../components'
 const { Header, Content, Footer, Sider } = Layout;
@@ -10,6 +11,7 @@ const Chatroom = () => {
   const [user, setUser] = useState({});
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState('');
+  const [messages, setMessages] = useSocketMessages(user.openid)
 
   const handleUserChange = (_user) => {
     setUser(_user);
@@ -35,6 +37,9 @@ const Chatroom = () => {
       "content": message
     })
     .then((res) => {
+      setMessages([...messages, {
+        content: message, createTime: Date.now(), fromUserName: 'KF', messageType: 'send'
+      }])
       setMessage('')
       setSubmitting(false);
     })
@@ -55,6 +60,7 @@ const Chatroom = () => {
       </Sider>
       <Content style={{ minHeight: 280 }}>
         <MessageHeader user={user}/>
+        <p>{messages.length}</p>
         <CommentBox 
           onMessageChange={onMessageChange}
           message={message} 
