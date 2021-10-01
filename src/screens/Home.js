@@ -9,7 +9,8 @@ const Home = () => {
 
   const handleGetQR = () => {
     setLoading(true)
-    wechat.get(`/v1/get_tmp_qr_code_url?sceneId=1000&expire=180`)
+    // wechat.get(`/v1/get_tmp_qr_code_url?sceneId=1000&expire=180`)
+    wechat.get(`/v1/wecom-qr-code`)
     .then((res) => {
       console.log(res.data.code)
       setQrLink(res.data.code)
