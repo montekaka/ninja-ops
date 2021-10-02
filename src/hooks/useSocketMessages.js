@@ -16,8 +16,8 @@ const useSocketMessages = (wechatId) => {
   useEffect(() => {
     if(wechatId) {
       socket.on(`wechat_${wechatId}`, (msg) => {
-        const {Content, CreateTime, FromUserName} = msg;        
-        setNewMessage({content: Content, createTime: CreateTime, fromUserName: FromUserName, messageType: 'receive'})
+        const {content, createTime, fromUserName} = msg;        
+        setNewMessage({content: content, createTime: createTime, fromUserName: fromUserName, messageType: 'receive'})
         // console.log(newMessage)
         // const _messages = [...messages, {content: Content, createTime: CreateTime, fromUserName: FromUserName, messageType: 'receive'}];
         // setMessages(_messages);

@@ -11,7 +11,7 @@ const Chatroom = () => {
   const [user, setUser] = useState({});
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useSocketMessages(user.openid)
+  const [messages, setMessages] = useSocketMessages(user.userId)
 
   const handleUserChange = (_user) => {
     setUser(_user);
@@ -32,11 +32,11 @@ const Chatroom = () => {
 
   const onSubmit = () => {
     setSubmitting(true);
-    wechat.post('/v1/send_text', {
-      "toUserId": user.openid,
+    wechat.post('/v1/wecom-send-message', {
+      "toUserId": user.userId,
       "content": message
     })
-    .then((res) => {
+    .then((res) => {      
       setMessages([{
         content: message, createTime: Date.now(), fromUserName: 'KF', messageType: 'send'
       }, ...messages])
