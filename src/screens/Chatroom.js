@@ -49,6 +49,18 @@ const Chatroom = () => {
     })
   }
 
+  const sendQuestion = () => {
+    wechat.post('/v1/wecom-send-question', {
+      "toUserId": user.userId
+    })
+    .then((res) => {      
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }  
+
   const onMessageChange = (value) => {
     setMessage(value)
   }
@@ -65,7 +77,9 @@ const Chatroom = () => {
           onMessageChange={onMessageChange}
           message={message} 
           submitting={submitting} 
-          onSubmit={onSubmit}/>
+          onSubmit={onSubmit}
+          sendQuestion={sendQuestion}
+          />
       </Content>
     </Layout>
   )
