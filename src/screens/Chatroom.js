@@ -32,7 +32,7 @@ const Chatroom = () => {
 
   const onSubmit = () => {
     setSubmitting(true);
-    wechat.post('/v1/wecom-send-message', {
+    wechat.post('/v1/wechaty-message', {
       "name": user.name,
       "message": message
     })
