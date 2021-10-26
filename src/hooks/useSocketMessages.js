@@ -8,7 +8,7 @@ const useSocketMessages = (wechatId) => {
 
   useEffect(() => {
     if(!socket) {
-      const _ = io.connect(process.env.REACT_APP_MS_WECHAT_BASE_PATH)
+      const _ = io.connect(process.env.REACT_APP_MS_BACKEND_BASE_PATH)
       setSocket(_)
     }
   }, [])

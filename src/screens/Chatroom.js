@@ -11,7 +11,7 @@ const Chatroom = () => {
   const [user, setUser] = useState({});
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useSocketMessages(user.userId)
+  const [messages, setMessages] = useSocketMessages(user.id)
 
   const handleUserChange = (_user) => {
     setUser(_user);
