@@ -18,11 +18,11 @@ const Chatroom = () => {
   }
 
   useEffect(() => {
-    wechat.get('/v1/wechat-users')
+    wechat.get('/v1/contacts')
     .then((res) => {
-      setUsers(res.data.users)
-      if(res.data.users.length > 0) {
-        setUser(res.data.users[0]);
+      setUsers(res.data)
+      if(res.data.length > 0) {
+        setUser(res.data[0]);
       }
     })
     .catch((err) => {
@@ -33,8 +33,8 @@ const Chatroom = () => {
   const onSubmit = () => {
     setSubmitting(true);
     wechat.post('/v1/wecom-send-message', {
-      "toUserId": user.userId,
-      "content": message
+      "name": user.name,
+      "message": message
     })
     .then((res) => {      
       setMessages([{
@@ -48,18 +48,6 @@ const Chatroom = () => {
       setSubmitting(false);
     })
   }
-
-  const sendQuestion = () => {
-    wechat.post('/v1/wecom-send-question', {
-      "toUserId": user.userId
-    })
-    .then((res) => {      
-      console.log(res.data);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }  
 
   const onMessageChange = (value) => {
     setMessage(value)
@@ -78,7 +66,6 @@ const Chatroom = () => {
           message={message} 
           submitting={submitting} 
           onSubmit={onSubmit}
-          sendQuestion={sendQuestion}
           />
       </Content>
     </Layout>

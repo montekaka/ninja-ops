@@ -4,7 +4,7 @@ const MessageHeader = ({user}) => {
   if(user) {
     return (
       <div style={{padding: '10px 10px'}}>        
-        <h3>{user.nickname}</h3>
+        <h3>{user.name}</h3>
         <hr/>
       </div>
     )

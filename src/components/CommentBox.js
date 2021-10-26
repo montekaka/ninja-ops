@@ -3,7 +3,7 @@ import { Form, Button, Input} from 'antd';
 
 const { TextArea } = Input;
 
-const CommentBox = ({submitting, onSubmit, message, sendQuestion, onMessageChange}) => {
+const CommentBox = ({submitting, onSubmit, message, onMessageChange}) => {
 
   return (
     <div style={{padding: "20px"}}>
@@ -18,9 +18,6 @@ const CommentBox = ({submitting, onSubmit, message, sendQuestion, onMessageChang
         }} type="primary">
           Send
         </Button>
-        <Button htmlType="submit" loading={submitting} onClick={sendQuestion} type="info">
-          Send Question
-        </Button>        
       </Form.Item>  
     </div>
   )

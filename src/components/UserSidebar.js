@@ -11,12 +11,12 @@ const UserSidebar = (props) => {
     renderItem={item => (
       <List.Item>
         <List.Item.Meta
-          avatar={<Avatar src={item.headimgurl} />}
+          avatar={<Avatar src={item.avatar} />}
           title={<div 
               onClick={() => {
                 changeUser(item)
               }}
-              style={{color: 'white', cursor: 'pointer'}}>{item.nickname}</div>}
+              style={{color: 'white', cursor: 'pointer'}}>{item.name}</div>}
         />
       </List.Item>
     )}
