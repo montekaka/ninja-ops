@@ -7,11 +7,11 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const Chatroom = () => {
 
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useSocketMessages(user.id)
+  const [messages, setMessages, friends, setFriends] = useSocketMessages(user.id)
 
   const handleUserChange = (_user) => {
     setUser(_user);
@@ -20,7 +20,7 @@ const Chatroom = () => {
   useEffect(() => {
     wechat.get('/v1/contacts')
     .then((res) => {
-      setUsers(res.data)
+      setFriends(res.data)
       if(res.data.length > 0) {
         setUser(res.data[0]);
       }
@@ -56,7 +56,7 @@ const Chatroom = () => {
   return (
     <Layout>
       <Sider className="site-layout-background" style={{padding: "20px"}} width={200}>
-        <UserSidebar items={users} changeUser={handleUserChange}/>
+        <UserSidebar items={friends} changeUser={handleUserChange}/>
       </Sider>
       <Content style={{ minHeight: 280 }}>
         <MessageHeader user={user}/>

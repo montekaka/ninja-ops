@@ -3,13 +3,19 @@ import io from "socket.io-client"
 
 const useSocketMessages = (wechatId) => {
   const [messages, setMessages] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [socket, setSocket] = useState(null);
   const [newMessage, setNewMessage] = useState(null);
 
   useEffect(() => {
     if(!socket) {
-      const _ = io.connect(process.env.REACT_APP_MS_BACKEND_BASE_PATH)
-      setSocket(_)
+      const _socket = io.connect(process.env.REACT_APP_MS_BACKEND_BASE_PATH)
+      setSocket(_socket)
+      // friends
+      _socket.on('friends', (_friend) => {
+        const {kfWechatId, fromUserName, fromUserId,fromUserAvatar} =_friend;
+        setFriends([...friends, {name: fromUserName, id: fromUserId, avatar: fromUserAvatar}])
+      })
     }
   }, [])
 
@@ -32,7 +38,7 @@ const useSocketMessages = (wechatId) => {
     }
   }, [newMessage])
 
-  return [messages, setMessages]
+  return [messages, setMessages, friends, setFriends]
 }
 
 export default useSocketMessages
