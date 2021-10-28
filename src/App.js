@@ -1,28 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import en_US from '@douyinfe/semi-ui/lib/es/locale/source/en_US';
 import {Home, Chatroom} from './screens'
 import {Navbar} from './components'
 // import { Layout} from 'antd';
 // const { Content, Footer} = Layout;
-import { Layout } from '@douyinfe/semi-ui';
+import { LocaleProvider, Layout } from '@douyinfe/semi-ui';
 
 
-function App() {
-  const { Content } = Layout;
+function App() {  
 
   return (
-    <Router>
-      <Layout className="layout">
-        <Navbar/>
-        <Content  className="site-layout">          
-          <Switch>
-            <Route exact path="/"><Home/></Route>
-            <Route exact path="/chatroom"><Chatroom/></Route>
-          </Switch>
-        </Content>
-      </Layout>
-    </Router>
+    <LocaleProvider locale={en_US}>
+      <Router>
+        <Layout className="layout">
+          <Navbar/>    
+            <Switch>
+              <Route exact path="/"><Home/></Route>
+              <Route exact path="/chatroom"><Chatroom/></Route>
+            </Switch>        
+        </Layout>
+      </Router>
+    </LocaleProvider>
   );
 }
 

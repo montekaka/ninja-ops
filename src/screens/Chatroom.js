@@ -1,72 +1,41 @@
 import React, {useEffect, useState} from 'react';
 import wechat from '../apis/wechat'
 import {useSocketMessages} from '../hooks'
-import { Layout, Menu, Breadcrumb } from 'antd';
-import {UserSidebar, MessageHeader, CommentBox, Messages} from './../components'
-const { Header, Content, Footer, Sider } = Layout;
+import { Layout, Breadcrumb, Avatar, Typography} from '@douyinfe/semi-ui';
+import {UserSidebar, MessageHeader, CommentBox, Messages, ContactList} from './../components'
 
 const Chatroom = () => {
+  const { Content, Sider} = Layout;
+  const { Text } = Typography;
 
-  // const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
-  const [submitting, setSubmitting] = useState(false)
-  const [message, setMessage] = useState('');
-  const [messages, setMessages, friends, setFriends] = useSocketMessages(user.id)
+  const [currentUser, setCurrentUser] = useState({"name": "Kaka", "id": "7881300233152715", "avatar": "http://mmhead.c2c.wechat.com/mmhead/SMt4cxnN46q1o0KsondHotCuFkCZh28ZbKHichbnFRFbiad2ZkRFswkg/0"});
 
-  const handleUserChange = (_user) => {
-    setUser(_user);
-  }
-
-  useEffect(() => {
-    wechat.get('/v1/contacts')
-    .then((res) => {
-      setFriends(res.data)
-      if(res.data.length > 0) {
-        setUser(res.data[0]);
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }, [])
-
-  const onSubmit = () => {
-    setSubmitting(true);
-    wechat.post('/v1/wechaty-message', {
-      "name": user.name,
-      "message": message
-    })
-    .then((res) => {      
-      setMessages([{
-        content: message, createTime: Date.now(), fromUserName: 'KF', messageType: 'send'
-      }, ...messages])
-      setMessage('')
-      setSubmitting(false);
-    })
-    .catch((err) => {
-      console.log(err)
-      setSubmitting(false);
-    })
-  }
-
-  const onMessageChange = (value) => {
-    setMessage(value)
+  const changeUser = (user) => {
+    setCurrentUser(user);
   }
 
   return (
     <Layout>
-      <Sider className="site-layout-background" style={{padding: "20px"}} width={200}>
-        <UserSidebar items={friends} changeUser={handleUserChange}/>
+      <Sider>
+        <ContactList
+          items={[
+            {"name": "Kaka", "id": "7881300233152715", "avatar": "http://mmhead.c2c.wechat.com/mmhead/SMt4cxnN46q1o0KsondHotCuFkCZh28ZbKHichbnFRFbiad2ZkRFswkg/0"},
+            {"name": "may 张丹萍", "id": "7881302734171450", "avatar": "http://mmhead.c2c.wechat.com/mmhead/bVy2VQVTWzbNu2kVtzRgbiaPAO53Ws8uG1HB7PS2bBGNr6mEfj80XUA/0"}
+          ]}
+          changeUser={changeUser}
+        />
       </Sider>
-      <Content style={{ minHeight: 280 }}>
-        <MessageHeader user={user}/>
-        <Messages messages={messages}/>
-        <CommentBox 
-          onMessageChange={onMessageChange}
-          message={message} 
-          submitting={submitting} 
-          onSubmit={onSubmit}
-          />
+      <Content 
+        style={{
+          padding: '24px',
+          backgroundColor: 'var(--semi-color-bg-0)'
+        }}      
+      >
+        <div style={{marginBottom: '24px'}}>
+          <Avatar src={currentUser.avatar} size="small"/>
+          <Text size='large' style={{marginLeft: '10px'}} >{currentUser.name}</Text>
+        </div>
+          
       </Content>
     </Layout>
   )
