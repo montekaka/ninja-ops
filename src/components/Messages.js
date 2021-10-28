@@ -1,6 +1,5 @@
 import React from 'react';
-import { Avatar, Image } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Skeleton } from '@douyinfe/semi-ui';
 
 const Message = ({item}) => {
   if(item) {
@@ -34,11 +33,11 @@ const Messages = ({messages}) => {
   if(messages) {
     return (
       <div style={{
-          display: 'flex', 
-          padding: "20px", 
-          minHeight: '280px',
-          flexDirection: 'column-reverse'
-        }}>
+        display: 'flex', 
+        padding: "20px", 
+        minHeight: '280px',
+        flexDirection: 'column-reverse'
+      }}>
         {
           messages.map((item, id) => <Message key={(id+1).toString()} item={item}/>)
         }
@@ -46,7 +45,12 @@ const Messages = ({messages}) => {
     )
   }
 
-  return null;
+  return (
+    <Skeleton placeholder={(<Skeleton.Paragraph rows={2}/>)} loading={true}>
+      <p>Hi, Bytedance dance dance.</p>
+      <p>Hi, Bytedance dance dance.</p>
+    </Skeleton>    
+  );
 }
 
 export default Messages;

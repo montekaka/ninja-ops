@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import wechat from '../apis/wechat'
 import {useSocketMessages} from '../hooks'
 import { Layout, Breadcrumb, Avatar, Typography} from '@douyinfe/semi-ui';
-import {UserSidebar, MessageHeader, CommentBox, Messages, ContactList} from './../components'
+import {UserSidebar, MessageHeader, MessageInput, Messages, ContactList} from './../components'
 
 const Chatroom = () => {
-  const { Content, Sider} = Layout;
+  const { Content, Sider, Footer} = Layout;
   const { Text } = Typography;
 
   const [currentUser, setCurrentUser] = useState({"name": "Kaka", "id": "7881300233152715", "avatar": "http://mmhead.c2c.wechat.com/mmhead/SMt4cxnN46q1o0KsondHotCuFkCZh28ZbKHichbnFRFbiad2ZkRFswkg/0"});
@@ -28,14 +28,35 @@ const Chatroom = () => {
       <Content 
         style={{
           padding: '24px',
-          backgroundColor: 'var(--semi-color-bg-0)'
+          backgroundColor: 'var(--semi-color-bg-4)'
         }}      
       >
         <div style={{marginBottom: '24px'}}>
           <Avatar src={currentUser.avatar} size="small"/>
           <Text size='large' style={{marginLeft: '10px'}} >{currentUser.name}</Text>
         </div>
-          
+        <div style={{
+          display: 'grid',
+          gridTemplateRows: "1fr minmax(90px, 1fr)"
+        }}>
+          <div
+            style={{
+              borderRadius: '10px',
+              border: '1px solid var(--semi-color-border)',
+              padding: '32px'
+            }}
+          >
+            <Messages/>
+          </div>
+          <div>
+            <MessageInput
+              // onMessageChange={onMessageChange}
+              // message={message} 
+              // submitting={submitting} 
+              // onSubmit={onSubmit} 
+            />
+          </div>
+        </div>
       </Content>
     </Layout>
   )

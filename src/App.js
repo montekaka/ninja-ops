@@ -14,12 +14,14 @@ function App() {
   return (
     <LocaleProvider locale={en_US}>
       <Router>
-        <Layout className="layout">
-          <Navbar/>    
-            <Switch>
-              <Route exact path="/"><Home/></Route>
-              <Route exact path="/chatroom"><Chatroom/></Route>
-            </Switch>        
+        <Layout className="layout" style={{
+          minHeight: '100vh'
+        }}>
+          <Navbar/>
+          <Switch>
+            <Route exact path="/"><Home/></Route>
+            <Route exact path="/chatroom"><Chatroom/></Route>
+          </Switch>        
         </Layout>
       </Router>
     </LocaleProvider>
