@@ -53,7 +53,7 @@ const Chatroom = (props) => {
         >
           {currentUser && <div style={{marginBottom: '24px'}}>
             <Avatar src={currentUser.avatar} size="small"/>
-            <Text style={{marginLeft: '10px'}} >{currentUser.name}</Text>
+            <Text style={{marginLeft: '10px'}} >{currentUser.name}</Text>            
           </div>}
           <Messages messages={messages}/>
         </Content>

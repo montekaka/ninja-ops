@@ -8,7 +8,7 @@ const Message = ({item}) => {
       return (
         <div style={{display: 'flex'}}>
           <div style={{marginRight: "10px"}}>
-            <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{fromUserName}</Avatar>
+            <Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{fromUserName}</Avatar>
           </div>
           <div><p>{content}</p></div>
         </div>
@@ -17,7 +17,7 @@ const Message = ({item}) => {
       return (
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>          
           <div style={{marginLeft: "10px"}}>
-            <Avatar style={{ backgroundColor: '#87d068' }}>{fromUserName}</Avatar>
+            <Avatar size="small" style={{ backgroundColor: '#87d068' }}>{fromUserName}</Avatar>
           </div>
           <div><p>{content}</p></div>
         </div>

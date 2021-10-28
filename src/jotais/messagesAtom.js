@@ -71,31 +71,24 @@ export const currentUserMessagesAtom = atom((get) => {
 
   if(currentContactId && contacts[currentContactId]) {
     const user = contacts[currentContactId];
-    const _messages = [{
-      content: msg, createTime: Date.now(), fromUserName: 'KF', messageType: 'send'
-    }, ...user.messages];
 
-    set(messagesAtom, () => {
-      _contacts[currentContactId]['messages'] = _messages;
-      return _contacts;
-    })  
+    wechat.post('/v1/wechaty-message', {
+      "name": user.name,
+      "message": msg
+    })
+    .then((res) => {
+      const _messages = [{
+        content: msg, createTime: Date.now(), fromUserName: 'KF', messageType: 'send'
+      }, ...user.messages];
 
-    // wechat.post('/v1/wechaty-message', {
-    //   "name": user.name,
-    //   "message": msg
-    // })
-    // .then((res) => {
-    //   const _messages = [{
-    //     content: msg, createTime: Date.now(), fromUserName: 'KF', messageType: 'send'
-    //   }, ...user.messages];
-
-    //   set(messagesAtom, () => {
-    //     return _contacts[currentContactId]['messages'] = _messages;
-    //   })      
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
+      set(messagesAtom, () => {
+        _contacts[currentContactId]['messages'] = _messages;
+        return _contacts;
+      })      
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
 
