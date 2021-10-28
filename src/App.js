@@ -20,7 +20,8 @@ function App() {
           <Navbar/>
           <Switch>
             <Route exact path="/"><Home/></Route>
-            <Route exact path="/chatroom"><Chatroom/></Route>
+            <Route exact path="/chatroom/:id"><Chatroom/></Route>
+            <Route exact path="/chatroom"><Chatroom/></Route>            
           </Switch>        
         </Layout>
       </Router>

@@ -17,7 +17,8 @@ const ContactList = ({items, changeUser}) => {
       >
         {
           items.map((item, idx) => 
-            <Nav.Item 
+            <Nav.Item
+              key={`${idx+1}`} 
               itemKey={idx} 
               text={item.name} 
               icon={<img src={item.avatar}/>} 
