@@ -1,29 +1,23 @@
 import React from 'react';
-import { Avatar, Skeleton } from '@douyinfe/semi-ui';
+import { Avatar, Skeleton, Typography } from '@douyinfe/semi-ui';
+import { IconUser } from '@douyinfe/semi-icons';
 
 const Message = ({item}) => {
+  const { Title, Text, Paragraph } = Typography;
+
   if(item) {
-    const {content, createTime, fromUserName, messageType} = item;
-    if(messageType === 'receive') {
-      return (
-        <div style={{display: 'flex'}}>
-          <div style={{marginRight: "10px"}}>
-            <Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{fromUserName}</Avatar>
-          </div>
-          <div><p>{content}</p></div>
+    const {content, createTime, fromUserName, messageType, fromUserAvatar} = item;
+    return (
+      <div style={{display: 'flex'}}>
+        <div>
+          {fromUserAvatar ? <Avatar size="small" src={fromUserAvatar}></Avatar> : <Avatar size="small" color="red" ><IconUser/></Avatar>}
         </div>
-      )
-    } else {
-      return (
-        <div style={{display: 'flex', flexDirection: 'row-reverse'}}>          
-          <div style={{marginLeft: "10px"}}>
-            <Avatar size="small" style={{ backgroundColor: '#87d068' }}>{fromUserName}</Avatar>
-          </div>
-          <div><p>{content}</p></div>
+        <div style={{padding: '0 10px'}}>
+          <Text style={{fontWeight: 'bold'}}>{fromUserName}</Text>
+          <Paragraph>{content}</Paragraph>
         </div>
-      )      
-    }
- 
+      </div>
+    )
   }
 
   return null;
@@ -35,7 +29,6 @@ const Messages = ({messages}) => {
       <div style={{
         display: 'flex', 
         padding: "20px", 
-        minHeight: '280px',
         flexDirection: 'column-reverse'
       }}>
         {

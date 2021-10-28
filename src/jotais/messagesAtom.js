@@ -126,10 +126,10 @@ export const updateMessagesAtom = atom(null, (get, set, incomingData) => {
         })
       } 
     } else if (type === 'new-message') {
-      const {content, createTime, fromUserId, fromUserName} = data;                
+      const {fromUserAvatar, content, createTime, fromUserId, fromUserName} = data;                
       if(_currentState[fromUserId] && _currentState[fromUserId]['messages']) {
         const messages = _currentState[fromUserId]['messages']
-        const newMessage = {content: content, id: fromUserId, createTime: createTime, fromUserName: fromUserName, messageType: 'receive'};
+        const newMessage = {content: content, id: fromUserId, createTime: createTime, fromUserName: fromUserName, messageType: 'receive', fromUserAvatar};
         const _messages = [newMessage, ...messages]
         _currentState[fromUserId]['messages'] = _messages;
         set(messagesAtom, () => {

@@ -15,7 +15,7 @@ import { useAtom } from 'jotai';
 
 const Chatroom = (props) => {
   // const id = props.match.params.id;
-  const { Content, Sider, Footer} = Layout;
+  const { Header, Content, Sider, Footer} = Layout;
   const { Text } = Typography;
 
   // fetch contacts
@@ -58,17 +58,22 @@ const Chatroom = (props) => {
         />
       </Sider>
       <Layout>
-        <Content 
-          style={{
-            padding: '24px',
-            backgroundColor: 'var(--semi-color-bg-4)'
-          }}      
-        >
-          {currentUser && <div style={{marginBottom: '24px'}}>
+        {currentUser && 
+          <Header style={{padding: '24px', backgroundColor: 'var(--semi-color-bg-1)', border: '1px solid var(--semi-color-border)'}}>
             <Avatar src={currentUser.avatar} size="small"/>
             <Text style={{marginLeft: '10px'}} >{currentUser.name}</Text>            
-          </div>}
-          <Messages messages={messages}/>
+          </Header>}        
+        <Content 
+          style={{
+            flex: "1 1 auto",
+            padding: '24px',
+            backgroundColor: 'var(--semi-color-bg-4)'
+          }}
+        >
+          <div style={{
+            display: 'flex', height: '100%', border: '1px solid var(--semi-color-border)',}}>
+            <Messages messages={messages}/>
+          </div>
         </Content>
         <Footer style={{
           padding: '24px',
