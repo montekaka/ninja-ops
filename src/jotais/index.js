@@ -1,15 +1,17 @@
 import {
   messagesAtom,
   currentUserAtom,
-  fetchContacts,
+  fetchContactsAtom,
   getContactsAtom,
+  currentUserMessagesAtom,
   currentUserIdAtom
 } from './messagesAtom'
 
 export {
   messagesAtom,
   currentUserAtom,
-  fetchContacts,
+  fetchContactsAtom,
   currentUserIdAtom,
-  getContactsAtom
+  getContactsAtom,
+  currentUserMessagesAtom
 }
