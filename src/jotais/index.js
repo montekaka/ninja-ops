@@ -4,14 +4,20 @@ import {
   fetchContactsAtom,
   getContactsAtom,
   currentUserMessagesAtom,
-  currentUserIdAtom
+  currentUserIdAtom,
+  connectSocketAtom,
+  socketIncomingAtom,
+  updateMessagesAtom
 } from './messagesAtom'
 
 export {
+  connectSocketAtom,
   messagesAtom,
   currentUserAtom,
   fetchContactsAtom,
   currentUserIdAtom,
   getContactsAtom,
-  currentUserMessagesAtom
+  currentUserMessagesAtom,
+  socketIncomingAtom,
+  updateMessagesAtom
 }

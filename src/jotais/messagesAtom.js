@@ -1,8 +1,10 @@
 import {atom} from "jotai"
+import io from "socket.io-client"
 import wechat from '../apis/wechat'
 
 export const messagesAtom = atom({}) // contact_id: {name, id, avatar, messages}
-
+export const socketAtom = atom(null);
+export const socketIncomingAtom = atom(null);
 export const currentUserIdAtom = atom('') // id
 
 export const fetchContactsAtom = atom(null, (_get, set, id) => {
@@ -90,13 +92,51 @@ export const currentUserMessagesAtom = atom((get) => {
       console.log(err);
     })
   }
+})
 
+export const connectSocketAtom = atom(null, (get, set, connectionName) => {
+  const socket = get(socketAtom);
+  if(socket === null) {
+    const _socket = io.connect(process.env.REACT_APP_MS_BACKEND_BASE_PATH);
+    set(socketAtom, () => {return _socket});
+    _socket.on((connectionName), (incomingData) => {
+      set(socketIncomingAtom, () => {
+        return incomingData;
+      })
+    })
+  }  
+})
 
-  // set(messagesAtom, () => {
-  //   if(currentContactId && contacts[currentContactId]) {
-  //     const messages = contacts[currentContactId]['messages'];
-  //   } else {
-  //     return [];
-  //   }  
-  // })
+export const updateMessagesAtom = atom(null, (get, set, incomingData) => {
+  if(incomingData) {
+    const {type, data} = incomingData;
+    const currentState = get(messagesAtom);
+    let _currentState = {...currentState};
+        
+    if(type === 'new-friend') {
+      const {kfWechatId, fromUserName, fromUserId, fromUserAvatar} = data;
+      const friend = {name: fromUserName, id: fromUserId, avatar: fromUserAvatar};
+      if(_currentState[fromUserId] === undefined) {
+        _currentState[fromUserId] = {
+          ...friend,
+          messages: []
+        }
+        set(messagesAtom, () => {
+          return _currentState;
+        })
+      } 
+    } else if (type === 'new-message') {
+      const {content, createTime, fromUserId, fromUserName} = data;                
+      if(_currentState[fromUserId] && _currentState[fromUserId]['messages']) {
+        const messages = _currentState[fromUserId]['messages']
+        const newMessage = {content: content, id: fromUserId, createTime: createTime, fromUserName: fromUserName, messageType: 'receive'};
+        const _messages = [newMessage, ...messages]
+        _currentState[fromUserId]['messages'] = _messages;
+        set(messagesAtom, () => {
+          return _currentState;
+        }) 
+      }
+      
+    }
+  }
 })
