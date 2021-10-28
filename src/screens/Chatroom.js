@@ -25,39 +25,30 @@ const Chatroom = () => {
           changeUser={changeUser}
         />
       </Sider>
-      <Content 
-        style={{
+      <Layout>
+        <Content 
+          style={{
+            padding: '24px',
+            backgroundColor: 'var(--semi-color-bg-4)'
+          }}      
+        >
+          <div style={{marginBottom: '24px'}}>
+            <Avatar src={currentUser.avatar} size="small"/>
+            <Text size='large' style={{marginLeft: '10px'}} >{currentUser.name}</Text>
+          </div>
+          <Messages/>
+        </Content>
+        <Footer style={{
           padding: '24px',
-          backgroundColor: 'var(--semi-color-bg-4)'
-        }}      
-      >
-        <div style={{marginBottom: '24px'}}>
-          <Avatar src={currentUser.avatar} size="small"/>
-          <Text size='large' style={{marginLeft: '10px'}} >{currentUser.name}</Text>
-        </div>
-        <div style={{
-          display: 'grid',
-          gridTemplateRows: "1fr minmax(90px, 1fr)"
         }}>
-          <div
-            style={{
-              borderRadius: '10px',
-              border: '1px solid var(--semi-color-border)',
-              padding: '32px'
-            }}
-          >
-            <Messages/>
-          </div>
-          <div>
-            <MessageInput
-              // onMessageChange={onMessageChange}
-              // message={message} 
-              // submitting={submitting} 
-              // onSubmit={onSubmit} 
-            />
-          </div>
-        </div>
-      </Content>
+          <MessageInput
+                // onMessageChange={onMessageChange}
+                // message={message} 
+                // submitting={submitting} 
+                // onSubmit={onSubmit} 
+              />
+        </Footer>
+      </Layout>
     </Layout>
   )
 }
