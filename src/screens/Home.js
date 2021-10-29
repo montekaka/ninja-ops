@@ -1,39 +1,60 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Image, Space } from 'antd';
-import { Layout } from '@douyinfe/semi-ui';
+import { Layout, Card, Avatar, Space, Button, Typography } from '@douyinfe/semi-ui';
 import wechat from '../apis/wechat'
 
 const Home = () => {
   const { Content} = Layout;
-  const [qrLink, setQrLink] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { Meta } = Card;
+  const { Text } = Typography;
 
-  const handleGetQR = () => {
-    setLoading(true)
-    // wechat.get(`/v1/get_tmp_qr_code_url?sceneId=1000&expire=180`)
-    wechat.get(`/v1/wecom-qr-code`)
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    wechat.get(`/v1/wecom-member/joshchen`)
     .then((res) => {
-      console.log(res.data.code)
-      setQrLink(res.data.code)
-      setLoading(false)
+      const {avatar, name, qr_code, userid} = res.data;
+      setUser({avatar, name, qr_code, userid});
     })
     .catch((err) => {
       console.log(err)
-      setLoading(false)
     })
-  }
+  }, [])
 
   return (
-    <Content className="site-layout">
-      <div style={{display: 'flex',
-        flexDirection: 'column', 
-        alignItems: 'center'
-      }}>
-        <h1>Welcome</h1>
-        <Button onClick={handleGetQR} type="primary" loading={loading}>Generate a QR code</Button>
-        <br/>
-        {qrLink && <Image  width={400} src={qrLink}/>}
-      </div>
+    <Content className="site-layout"
+      style={{
+        padding: '24px',
+        backgroundColor: 'var(--semi-color-bg-0)'
+      }}    
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
+        <Card
+          style={{ maxWidth: 360 }}
+          title={
+            <Meta 
+              title={user.name}
+              avatar={
+                <Avatar 
+                  size="default"
+                  src={user.avatar}
+                />
+              }
+            />
+          }
+          cover={ 
+            <img 
+              alt="example" 
+              src={user.qr_code}
+            />
+          }          
+        >
+        </Card>        
+      </div>      
     </Content>
   )
 }
